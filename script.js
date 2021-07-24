@@ -107,22 +107,18 @@ function submit(table_id) {
         return;
     }
     
-    var check_smile_list = ["check_smile_0", "check_smile_1", "check_smile_2", "check_smile_3"];
-    for (var j = 0; j < check_smile_list.length; j++) {
-        if (!document.getElementsByName(j).value){
-            alert("笑顔度合いを全て確認してチェックしてください．");
-            all_checked = false;
-            return;
-        }
+    if (!document.getElementById("smile_check").checked){
+        alert("笑顔度合いを確認してチェックしてください．");
+        all_checked = false;
+        return;
     }
-    var check_nod_list = ["check_nod_0", "check_nod_0", "check_nod_2", "check_nod_3"];
-    for (var j = 0; j < check_nod_list.length; j++) {
-        if (!document.getElementsByName(j).value){
-            alert("頷き度合いを全て確認してチェックしてください．");
-            all_checked = false;
-            return;
-        }
+
+    if (!document.getElementById("nod_check").checked){
+        alert("頷き度合いを確認してチェックしてください．");
+        all_checked = false;
+        return;
     }
+
 
     const dialog_id = dialog_list[table_id-1].id;
     const dialog_turns = dialog_list[table_id-1].turns;
