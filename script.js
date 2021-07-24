@@ -44,7 +44,7 @@ function create_table(table_id, dialog){
             + '</td>'
         }
         else if (dialog_turns[i][1] == "user"){
-            table_tmp += '<td style = "text-align:center">お客</td>'
+            table_tmp += '<td style = "text-align:center">客</td>'
             if (dialog_turns[i][2] != "") {
                 table_tmp += '<td>'
                 + '<p style="background-color:lightgray;margin:2 0px;display:inline-block;">' + dialog_turns[i][2] +'</p>'
@@ -106,10 +106,26 @@ function submit(table_id) {
         alert("ワーカーID，性別，年代を入力してください．"); 
         return;
     }
+    
+    var check_smile_list = ["check_smile_0", "check_smile_1", "check_smile_2", "check_smile_3"];
+    for (var j = 0; j < check_smile_list.length; j++) {
+        if (!document.getElementsByName(j).value){
+            alert("笑顔度合いを全て確認してチェックしてください．");
+            all_checked = false;
+            return;
+        }
+    }
+    var check_nod_list = ["check_nod_0", "check_nod_0", "check_nod_2", "check_nod_3"];
+    for (var j = 0; j < check_nod_list.length; j++) {
+        if (!document.getElementsByName(j).value){
+            alert("頷き度合いを全て確認してチェックしてください．");
+            all_checked = false;
+            return;
+        }
+    }
 
     const dialog_id = dialog_list[table_id-1].id;
     const dialog_turns = dialog_list[table_id-1].turns;
-
     for (var i = 0; i < dialog_turns.length; i++) {
         var value_tmp = dialog_turns[i][0]+","+dialog_turns[i][1]+",";
 
