@@ -103,7 +103,7 @@
         <img src="figs/nod_deep_trimed.gif" class="image-vw" width="200" height="300">
         <figcaption><font color=gray>頷き度合い：大</font></figcaption>
       </figure>
-      <p><input type="checkbox" name="smile_check" id="smile_check" value="smile_check"> <font color=green size="3"><strong>頷き度合いを全て確認しました</strong></font></p>
+      <p><input type="checkbox" name="nod_check" id="nod_check" value="nod_check"> <font color=green size="3"><strong>頷き度合いを全て確認しました</strong></font></p>
    </p>
     <p>
       <h3>3-1. 2つの対話を作成してください</h3>
@@ -147,7 +147,8 @@
       <p><font color=maroon><strong>対話データの提出に関する注意事項</strong></font></p>
         <ul>
           <li>2つの対話には，それぞれのダウンロードボタンが設けられていますので，必ず両方の対話データをダウンロードして提出してください．</li>
-          <li>1度ダウンロードされた対話データのファイル名やファイルの中身は編集しないでください</li>
+          <li>ダウンロードされるCSVファイルは文字コードの関係上文字化けしている可能性がありますが，問題ありません．</li>
+          <li>1度ダウンロードされた対話データのファイル名やファイルの中身は編集しないでください．</li>
           <li>ダウンロードボタンをクリックしても対話データをダウンロードできない場合，全てのフォームが正しく入力されていな可能性があります．上記1-1.~3-1.の作業が正しくできているかを確認してください．</li>
         </ul>
     </p>
@@ -168,10 +169,12 @@
   </div>
   <script src="data/dialog_1.js"></script>
   <script src="data/dialog_2.js"></script>
+  <script src="data/dialog_3.js"></script>
+  <script src="data/dialog_4.js"></script>
   <script src="script.js"></script>
   <script type="text/javascript">
-    const dialog_list = [dialog_1, dialog_2];
-    for (var table_id = 1; table_id < dialog_list.length+1; ++table_id) {
+    const dialog_list = shuffle([dialog_1, dialog_2, dialog_3, dialog_4]);
+    for (var table_id = 1; table_id < 3; ++table_id) {
       document.getElementById('Table'+table_id).innerHTML = create_table(table_id, dialog_list[table_id-1]);
     }
   </script>
