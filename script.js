@@ -147,7 +147,7 @@ function submit(table_id) {
                 replace1=document.getElementById( dialog_id + "_" + dialog_turns[i][0] + '_' + dialog_turns[i][1]+"_utterance1" ).value;
                 replace2=document.getElementById( dialog_id + "_" + dialog_turns[i][0] + '_' + dialog_turns[i][1]+"_utterance2" ).value;
                 if(replace1=="" || replace2=="") all_checked = false;
-                else value_tmp += replace1 + "," + replace1 + ",,";
+                else value_tmp += replace1 + "," + replace2 + ",,";
             }
             else{
                 value_tmp += ",,,";
@@ -157,6 +157,6 @@ function submit(table_id) {
         text_write += value_tmp + "\n";
     }
 
-    if (all_checked==true) download(document.getElementById("WorkerID").value+"_"+age+"_"+gender+"_"+dialog_id+".csv", text_write);
+    if (all_checked==true) download(table_id+"_"+document.getElementById("WorkerID").value+"_"+age+"_"+gender+"_"+dialog_id+".csv", text_write);
     else alert(dialog_id+"つ目の対話欄に入力されていない項目があります．"); 
 };

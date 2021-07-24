@@ -20,7 +20,7 @@
       .dialog-contents{
         background-color: lightgray;
       }
-      figure.nod-gif{
+      figure.images{
         float: left;
         padding-right: 20px;
       }
@@ -29,14 +29,14 @@
 
 <body>
   <div class="container" id='Instruction'>
-    <h2 id="作業概要">作業概要</h3>
-    <p>旅行代理店における店員（カンターセールス）とお客さんの対話を作成していただきます．作業内容としては，<strong>既に作成済みの対話の大筋に沿って，お客さんの発話文を作成したり，各状況で予想される店員さんの表情や動作などを考えたりする</strong>，というものになります．</p>
-    <p>※ 作業時間は40分程度と予想されます．<br>※ 本ページを再読み込みすると，それまでに入力されたは情報すべてリセットされますのでご注意ください．</p>
-    <h2 id="対話内容">対話内容</h3>
+    <h2>作業概要</h3>
+    <p>旅行代理店における店員（カウンターセールス）とお客の対話を作成していただきます．作業内容としては，<strong>与えられた対話の大筋に沿って，具体的なお客の発話文を考えたり，各対話において予想される店員の表情や動作を考えたりする</strong>，というものになります．</p>
+    <p>※ 作業時間は40分程度と予想されます．<br>※ <font color=red>本ページを再読み込みすると，それまでに入力されたは情報すべてリセットされますのでご注意ください．</font></p>
+    <h2>対話状況</h3>
     <ul style="background-color:lightgray;">
-      <li><strong>旅行代理店における店員さんとお客さんの対話</strong></li>
-      <li>お客さんは周辺で遊びに行く観光地を<strong>候補として2箇所決めており，そのどちらに行くかを旅行代理店員と相談して決めたい</strong></li>
-      <li>旅行代理店員は，2つの観光地の見所などを説明したり，お客さんからの質問に答えたりしながら，お客様さん遊びに行く観光地を決めてもらう</li>
+      <li><strong>旅行代理店で店員とお客が会話している</strong></li>
+      <li>お客は周辺で遊びに行く観光地を<strong>候補として2箇所決めており，そのどちらに行くかを店員と相談して決めたい</strong></li>
+      <li>店員は，2つの観光地の見所などを説明したり，お客からの質問に答えたりしながら，お客が遊びに行く観光地を決めてもらう</li>
     </ul>
   </div>
   <div class="container" id="work">
@@ -49,8 +49,9 @@
       <h3>1-2. ご自身の性別と年代を選択してください</h3>
       <p>
         性別：
-        <input name="Gender" type="radio" value="Male" />男性
-        <input name="Gender" type="radio" value="Female" />女性
+        <input name="Gender" type="radio" value="M" />男性
+        <input name="Gender" type="radio" value="F" />女性
+        <input name="Gender" type="radio" value="O" />その他
       </p>
       <p>
         年齢：
@@ -63,33 +64,41 @@
       </p>
     </p>
     <p>
-      <h3>2-1. 旅行代理店員の「笑顔度合い」を確認してください</h3>
+      <h3>2-1. 旅行代理店員の「笑顔の度合い」を確認してください</h3>
       <p>※ 対話作成時に必要となります</p>
-      <figure class="nod-gif">
+      <figure class="images">
+        <img src="figs/smile_0.png" class="image-vw" width="240" height="170">
+        <figcaption><font color=gray>笑顔の度合い：無し</font></figcaption>
+      </figure>
+      <figure class="images">
         <img src="figs/smile_1.png" class="image-vw" width="240" height="170">
-        <figcaption><font color=gray>笑顔度合い：小</font></figcaption>
+        <figcaption><font color=gray>笑顔の度合い：小</font></figcaption>
       </figure>
-      <figure class="nod-gif">
+      <figure class="images">
         <img src="figs/smile_2.png" class="image-vw" width="240" height="170">
-        <figcaption><font color=gray>笑顔度合い：中</font></figcaption>
+        <figcaption><font color=gray>笑顔の度合い：中</font></figcaption>
       </figure>
-      <figure class="nod-gif">
+      <figure class="images">
         <img src="figs/smile_3.png" class="image-vw" width="240" height="170">
-        <figcaption><font color=gray>笑顔度合い：大</font></figcaption>
+        <figcaption><font color=gray>笑顔の度合い：大</font></figcaption>
       </figure>
     </p>
     <p>
       <h3>2-2. 旅行代理店員の「頷き度合い」を確認してください</h3>
       <p>※ 対話作成時に必要となります</p>
-      <figure class="nod-gif">
+      <figure class="images">
+        <img src="figs/nod_no.png" class="image-vw" width="200" height="300">
+        <figcaption><font color=gray>頷き度合い：無し</font></figcaption>
+      </figure>
+      <figure class="images">
         <img src="figs/nod_deep_eye_trimed.gif" class="image-vw" width="200" height="300">
         <figcaption><font color=gray>頷き度合い：小</font></figcaption>
       </figure>
-      <figure class="nod-gif">
+      <figure class="images">
         <img src="figs/nod_trimed.gif" class="image-vw" width="200" height="300">
         <figcaption><font color=gray>頷き度合い：中</font></figcaption>
       </figure>
-      <figure class="nod-gif">
+      <figure class="images">
         <img src="figs/nod_deep_trimed.gif" class="image-vw" width="200" height="300">
         <figcaption><font color=gray>頷き度合い：大</font></figcaption>
       </figure>
@@ -98,9 +107,9 @@
       <h3>3-1. 2つの対話を作成してください</h3>
       <p>以下のガイドラインと注意によく目を通してから，本ページ下部の表を埋めるかたちで対話を作成してください．</p>
       <ul>
-        <li>表の各行は，「発話者，発話文，笑顔度合い，頷き度合い」からなっています．</li>
-        <li>店員側の行には，<strong>その状況で予想されるような店員さんの笑顔の度合いと頷き度合いを選択</strong>してください</li>
-        <li>お客側の行には，<strong>発話文欄の各フォーム上部に書かれている指示に従ってお客さんの発話を<font color=maroon>2種類</font>作成</strong>してください．</li>
+        <li>表の各行は，「発話者，発話文，笑顔の度合い，頷き度合い」からなっています．</li>
+        <li>店員側の行には，<strong>その行の発話を行っているときの店員の笑顔度合いと頷き度合いとして，最も自然だと思うものを選択してください．</strong></li>
+        <li>お客側の行には，<strong>発話文欄の各フォーム上部に書かれている指示文に従って，<font color=maroon>言い方の異なる2種類のお客の発話文</font>を作成してください．</strong></li>
       </ul>
       <img src="figs/1.png" width="900">
       <p><font color=maroon><strong>発話文を作成する際の注意事項</strong></font></p>
@@ -114,16 +123,16 @@
                 </ul>
               </li>
             </ul>
-          <li>テキスト文ではありますが，<strong>できるだけ対面で対話していることを想定して発話文を作成してください</strong>．ため口，敬語など話し方のスタイルは自由に決めてください．</li>
-          <li>それぞれの指示文に対して2種類の発話文を作成していただきます．それぞれ発話の内容を変えたり口調を変えたりして，できるだけバリエーションができるように作成してください．</li>
+          <li>テキスト文ではありますが，<strong>できるだけ対面で対話していることを想定して発話文を作成してください</strong>．</li>
+          <li>それぞれの指示文に対して2種類の発話文を作成していただきます．<strong>発話の内容は同じまま，口調や言い方を変えたりすることで，できるだけバリエーションができるように作成してください．</strong></li>
           <li><strong>各時点までの対話の流れを考慮した発話文</strong>を作成してください．それより先（未来）の対話の流れは考慮しないでください．</li>
-          <li>指示文に<font color=blue>青色</font>で書かれた単語が含まれている場合があります．<strong>もしその単語をお客さんの発話文に入れる場合は必ずそのままの形で発話文に含めてください</strong>．
+          <li>指示文に<font color=blue>青色</font>で書かれた単語が含まれている場合があります．<strong><font color=maroon>もしその単語をお客の発話文に入れる場合は</font>必ずそのままの形で発話文に含めてください</strong>．
             <ul>
               <li>指示文「<span style="background-color:lightgray;"><font color=blue>民家集落博物館</font>への観光経験は無いことを伝える</span>」にしたがって作成する場合
                 <ul>
-                  <li><strong>良い例</strong>：<span style="background-color:lightgray">民家集落博物館は行ったことないな</span></li>
-                  <li><strong>良い例</strong>：<span style="background-color:lightgray">行ったことないですね</span></li>
-                  <li><strong>悪い例</strong>：<span style="background-color:lightgray">博物館は行ったことないんです</span></li>
+                  <li><strong>良い例（単語を含める場合）</strong>：<span style="background-color:lightgray">民家集落博物館は行ったことないな</span></li>
+                  <li><strong>良い例（単語を含めない場合）</strong>：<span style="background-color:lightgray">行ったことないですね</span></li>
+                  <li><strong>悪い例（単語を含める場合）</strong>：<span style="background-color:lightgray">博物館は行ったことないんです</span></li>
                 </ul>
               </li>
             </ul>
@@ -139,13 +148,7 @@
           <li>ダウンロードボタンをクリックしても対話データをダウンロードできない場合，全てのフォームが正しく入力されていないことが考えられます．上記1-1.~3-1.の作業が正しくできているかを確認してください．</li>
         </ul>
     </p>
-    <p>
-      上記全ての作業が正確に行われていることが確認でき次第，CrowdWorksにてお仕事を承認し報酬をお支払いします．ただし，<strong>作業が正確に行われていない場合や，以下に挙げるような点が確認できた場合は，不適切とみなし非承認とすることがありますのでご注意ください．</strong>
-      <ul>
-        <li>2つすべての対話が提出されていない，もしくはインストラクション通りに作成されていない</li>
-        <li>明らかに対話の流れに沿わない発話や無関係な発話が含まれている</li>
-      </ul>
-    </p>
+    <p>上記全ての作業が正確に行われていることが確認でき次第，CrowdWorksにてお仕事を承認し報酬をお支払いします．ただし，<strong>作業がインストラクション通りに行われていない</strong>場合や，<strong>明らかに対話の流れに沿わない発話や無関係な発話が確認できた場合</strong>は，不適切とみなし非承認とすることがありますのでご注意ください．</p>
 
   </div>
   <div class="container" id='Table1'></div>
