@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Speech Evaluation Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .instruction {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            padding-top: 0;
+            margin-bottom: 20px;
+        }
+        .audio-section {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            padding-block: 0;
+            margin-bottom: 20px;
+        }
+        .audio-content {
+            display: flex;
+            gap: 50px;
+            align-items: start
+        }
+        .audio-player {
+            flex: 0.8;
+            min-width: 200px;
+        }
+        .play-button {
+            display: block;
+            margin: 10px auto;
+            padding: 5px 20px;
+            background-color: #666;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .evaluation-table {
+            flex: 1.2;
+            padding-top: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0px;
+        }
+        th {
+            text-align: left;
+            background-color: #e0e0e0;
+            padding-block: 0px;
+        }
+        td {
+            text-align: center;
+            min-width: 1em;
+            font-size: 0.9em;
+        }
+        tr:nth-child(2) td {
+            padding-bottom: 0;
+        }
+        tr:nth-child(3) td {
+            padding-top: 0;
+        }
+        td:first-child {
+            width: 30%;
+            text-align: right;
+            padding-right: 10px;
+        }
+        td:not(:first-child):not(:last-child) {
+            width: 8%;
+        }
+        td:last-child {
+            width: 30%;
+            text-align: left;
+            padding-left: 10px;
+        }
+        .radio-group {
+            display: contents;
+        }
+        .download-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #666;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .download-button:hover {
+            background-color: #555;
+        }
+        .error-message {
+            text-align: center;
+            padding: 40px;
+            background-color: #f8f8f8;
+            border-radius: 5px;
+            margin: 40px auto;
+            max-width: 600px;
+        }
+        .error-message h2 {
+            color: #d32f2f;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>対話音声評価フォーム</h1>
+    
+    <div id="main-content" style="display: none;">
+        <div class="instruction">
+            <h2>インストラクション</h2>
+            <p>以下に提示される 10 個の音声サンプルは、AI によって作成された対話音声です。それぞれの音声を聴き、その品質を評価してください。</p>
+            <p>評価項目は以下の 2 つです：
+                <ul>
+                    <li>
+                        <b>自然性</b>：人間らしく自然な対話音声に聞こえるかどうか。<font color=red>１を非常に<b>不自然</b></font>、<font color=blue>５を非常に<b>自然</b></font>とした５段階。
+                    </li>
+                    <li>
+                        <b>意味性</b>：対話の意味が理解できるかどうか。<font color=red>１を全く<b>意味が理解できない</b></font>、<font color=blue>５を非常に<b>意味が理解できる</b></font>とした５段階。
+                    </li>
+                </ul>
+            </p>
+            <p>全ての音声の評価が完了したら、ページ下部の「ダウンロード」ボタンをクリックし、出力される評価結果（拡張子が<b>.bin</b>のファイル）をお仕事ページにて提出してください。</p>
+            <p>その他の注意点：
+                <ul>
+                    <li>自宅など、静かな環境で評価を行ってください。</li>
+                    <li>出力される評価結果ファイルは開いたり編集したりしないでください。</li>
+                </ul>
+            </p>
+            <div id="audio-container"></div>
+            <button class="download-button" onclick="downloadResults()">ダウンロード</button>
+        </div>
+    </div>
+    <div id="error-content" style="display: none;">
+        <div class="error-message">
+            <h2>Error</h2>
+            <p>URLが不正です。お仕事ページのURLを正しく入力できているか確認してください。</p>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/wavesurfer.js@7"></script>
+    <!-- Load mapping file (evalset2audiofiles.js) between set id and audio files -->
+    <script src="evalset2audiofiles.js"></script>
+    <script>
+        // Get evaluation set of audio files from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const evalSet = urlParams.get('evalset') || '';
+        let audioFiles = [];
+
+        if (evalSet in evalSet2audioFiles) {
+            audioFiles = evalSet2audioFiles[evalSet];
+            document.getElementById('main-content').style.display = 'block';
+        } else {
+            document.getElementById('error-content').style.display = 'block';
+
+        }
+
+        // Create audio section
+        const container = document.getElementById('audio-container');
+        
+        for (let i = 0; i < audioFiles.length; i++) {
+            const section = document.createElement('div');
+
+            section.className = 'audio-section';
+            section.innerHTML = `
+                <div class="audio-content">
+                    <div class="audio-player">
+                        <h3>音声サンプル ${i + 1}/${audioFiles.length}</h3>
+                        <div id="waveform_${i}"></div>
+                        <button class="play-button" id="wavesurfer_${i}_btn">再生 / 停止</button>
+                    </div>
+                    <div class="evaluation-table">
+                        <table>
+                            <tr>
+                                <th colspan="7">・自然性</th>
+                            </tr>
+                            <tr>
+                                <td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td></td>
+                            </tr>
+                            <tr>
+                                <td>非常に不自然</td>
+                                <td><input type="radio" name="naturalness_${i}" value="1"></td>
+                                <td><input type="radio" name="naturalness_${i}" value="2"></td>
+                                <td><input type="radio" name="naturalness_${i}" value="3"></td>
+                                <td><input type="radio" name="naturalness_${i}" value="4"></td>
+                                <td><input type="radio" name="naturalness_${i}" value="5"></td>
+                                <td>非常に自然</td>
+                            </tr>
+                        </table>
+                        <table style="margin-top: 20px;">
+                            <tr>
+                                <th colspan="7">・意味性</th>
+                            </tr>
+                            <tr>
+                                <td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td></td>
+                            </tr>
+                            <tr>
+                                <td>全く理解できない</td>
+                                <td style="text-align: center;"><input type="radio" name="meaningfulness_${i}" value="1"></td>
+                                <td style="text-align: center;"><input type="radio" name="meaningfulness_${i}" value="2"></td>
+                                <td style="text-align: center;"><input type="radio" name="meaningfulness_${i}" value="3"></td>
+                                <td style="text-align: center;"><input type="radio" name="meaningfulness_${i}" value="4"></td>
+                                <td style="text-align: center;"><input type="radio" name="meaningfulness_${i}" value="5"></td>
+                                <td>非常に理解できる</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(section);
+
+            // Display audio waveform
+            const wavesurfer = WaveSurfer.create({
+                container: '#waveform_' + i,
+                waveColor: '#E8854A',
+                progressColor: '#383351',
+                url: audioFiles[i],
+                splitChannels: true,
+                dragToSeek: true,
+                barWidth: 2,
+                height: 45
+            })
+            // Play / Pause audio
+            document.getElementById('wavesurfer_' + i + '_btn').addEventListener('click', () => {
+                wavesurfer.playPause();
+            });
+        }
+    
+        // Download evaluation results
+        function downloadResults() {
+            // Check if all inputs are filled
+            const totalInputs = audioFiles.length * 2; // 2 inputs per audio file
+            const checkedInputs = document.querySelectorAll('input[type="radio"]:checked').length;
+            
+            if (checkedInputs < totalInputs) {
+                alert('すべての項目を評価してください。');
+                return;
+            }
+            
+            // Gather evaluation results
+            let results = [];
+            for (let i = 0; i < audioFiles.length; i++) {
+                const naturalness = document.querySelector(`input[name="naturalness_${i}"]:checked`)?.value || '';
+                const meaningfulness = document.querySelector(`input[name="meaningfulness_${i}"]:checked`)?.value || '';
+                
+                results.push({
+                    audio: audioFiles[i] || `audio_${i + 1}`,
+                    naturalness,
+                    meaningfulness
+                });
+            }
+            
+            // Create CSV
+            const csv = [
+                'audio,naturalness,meaningfulness',
+                ...results.map(r => `${r.audio},${r.naturalness},${r.meaningfulness}`)
+            ].join('\n');
+            
+            // Download CSV
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'evaluation_results.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
