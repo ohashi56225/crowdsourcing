@@ -225,7 +225,6 @@
                 progressColor: '#383351',
                 url: audioFiles[i],
                 splitChannels: true,
-                dragToSeek: true,
                 barWidth: 2,
                 height: 45
             })
@@ -261,7 +260,7 @@
             
             // Create CSV
             const csv = [
-                'audio,naturalness,meaningfulness',
+                'audiofile,naturalness,meaningfulness',
                 ...results.map(r => `${r.audio},${r.naturalness},${r.meaningfulness}`)
             ].join('\n');
             
@@ -270,7 +269,7 @@
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'evaluation_results.csv';
+            a.download = `result-${evalSet}.bin`;
             a.click();
             window.URL.revokeObjectURL(url);
         }
