@@ -260,12 +260,14 @@
             
             // Create CSV
             const csv = [
-                'audiofile,naturalness,meaningfulness',
-                ...results.map(r => `${r.audio},${r.naturalness},${r.meaningfulness}`)
+                'evalset,audiofile,naturalness,meaningfulness',
+                ...results.map(r => `${evalSet},${r.audio},${r.naturalness},${r.meaningfulness}`)
             ].join('\n');
+            encoded = btoa(csv);
             
             // Download CSV
-            const blob = new Blob([csv], { type: 'text/csv' });
+            // const blob = new Blob([csv], { type: 'text/csv' });
+            const blob = new Blob([encoded], { type: 'application/octet-stream' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
